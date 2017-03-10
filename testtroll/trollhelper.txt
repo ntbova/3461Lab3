@@ -1,0 +1,11 @@
+
+#if not data: break
+#check what kind of data it is by the size
+#if sys.getsizeof(data) == 4:
+#if sys.getsizeof(data) == 20:
+#else:
+#file_size = int(data.decode())
+
+#TROLL COMMAND
+
+troll -C sl2.cse.ohio-state.edu -S sl1.cse.ohio-state.edu -a 4000 -b 3000 -r -s 1 -t -x 0 5000
