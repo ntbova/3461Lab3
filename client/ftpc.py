@@ -29,7 +29,7 @@ if os.path.isfile(strfile): #ensures file named "strfile" exists in current dire
 		#print("File size is: " + str(file_size)) #debug code
 
 		size_struct = struct.pack("i", file_size) #packing file_size for transfer to server
-		client.sendto(size_struct, ('localhost', int(remote_port)))#send the file size first to the troll on troll_port
+		client.sendto(size_struct, ('localhost', int(troll_port)))#send the file size first to the troll on troll_port
 		data = client.recv(size_buffer) #wait to get data sent back from server for confirmation
 		client.sendto(strfile.encode(), ('localhost', troll_port))#send the file name second
 		data = client.recv(size_buffer)
