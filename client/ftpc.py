@@ -42,6 +42,7 @@ if os.path.isfile(strfile): #ensures file named "strfile" exists in current dire
 			#copy_file.write(data) #writes 1000 bytes of data to copy_file 
 			start_i += size_buffer #increments start_i to move accross bin_file
 			end_i += size_buffer
+			sleep(0.001) #sleep to allow for UDP buffering
 		#clean-up after exiting loop
 		bin_file.close()
 		print("\nFile transfer complete!")

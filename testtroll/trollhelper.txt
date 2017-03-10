@@ -9,3 +9,7 @@
 #TROLL COMMAND
 
 troll -C sl2.cse.ohio-state.edu -S sl1.cse.ohio-state.edu -a 4000 -b 3000 -r -s 1 -t -x 0 5000
+
+#GET IMAGE
+
+scp bova.26@sl1.cse.ohio-state.edu:3461Lab3/server/1.jpg test.jpg
