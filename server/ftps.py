@@ -25,9 +25,9 @@ print ('\nWaiting for packets to be sent...')
 
 # loop until it no longer is recieving any data
 # while 1:
-data, addr = conn.recvfrom(4)
+data, addr = server.recvfrom(4)
 file_size = struct.unpack("i", data)
-data = conn.recv(20) #recieving file name
+data, addr = server.recvfrom(20) #recieving file name
 file_name = data.decode()
 
 print("File size is: " + str(file_size)) #debug code
