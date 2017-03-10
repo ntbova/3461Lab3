@@ -24,14 +24,20 @@ print ('\nWaiting for packets to be sent...')
 # print ('\nConnected by: '), addr
 
 # loop until it no longer is recieving any data
-# while 1:
-data, addr = server.recvfrom(4) #receiving file size
-file_size = struct.unpack("i", data)
-server.sendto(data, addr) 
-data, addr = server.recvfrom(20) #receiving file name
-file_name = data.decode()
-server.sendto(data, addr)
-
+while 1:
+	data, addr = server.recvfrom(4) #receiving file size
+	file_size = struct.unpack("i", data)
+	server.sendto(data, addr) 
+	break
+#DEBUG CODE
+print (file_size)
+while 1:
+	data, addr = server.recvfrom(20) #receiving file name
+	file_name = data.decode()
+	server.sendto(data, addr)
+	break
+#DEBUG CODE
+print (file_name)
 # print("File size is: " + str(file_size)) #debug code
 
 with open(file_name, 'bw') as server_file:
