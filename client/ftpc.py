@@ -15,6 +15,9 @@ start_i = 0
 end_i = 1000
 size_buffer = 1000
 
+#udp segment
+
+
 #creating the client here
 client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 client.bind((local_ip, 4000))
