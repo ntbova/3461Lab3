@@ -1,5 +1,6 @@
 #Lab 2 - ftpc.py - Nicholas Bova
 import socket
+import time
 import sys
 import os
 import struct
