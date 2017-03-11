@@ -61,5 +61,4 @@ if os.path.isfile(strfile): #ensures file named "strfile" exists in current dire
 else: #print error if file not found
 	print("File not found.")
 #clean-up
-client.sendto(end_struct, (local_ip, int(troll_port)))
 client.close()

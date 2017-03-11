@@ -1,6 +1,7 @@
 #Lab 2 - ftps.py - Nicholas Bova
-import socket
+from socket import *
 import sys
+import select
 import os
 import struct
 
