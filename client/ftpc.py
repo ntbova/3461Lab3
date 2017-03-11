@@ -7,7 +7,7 @@ import struct
 
 #Program global variables below
 remote_ip = sys.argv[1] #first arg = remote-IP-on-gamma
-remote_port = sys.argv[2] #second arg = remote-port-on-gamma
+remote_port = int(sys.argv[2]) #second arg = remote-port-on-gamma
 troll_port = sys.argv[3] #third arg = troll port on beta
 strfile = sys.argv[4] #fourth arg = file name
 local_ip = socket.gethostbyname(socket.gethostname()) #gets public ip of current server
@@ -34,16 +34,16 @@ if os.path.isfile(strfile): #ensures file named "strfile" exists in current dire
 		
 		#print("File size is: " + str(file_size)) #debug code
 
-		size_struct = struct.pack("ihhi", remote_ip, remote_port, 1, file_size) #packing file_size for transfer to server
+		size_struct = struct.pack("ihhi", local_ip, 4000, 1, file_size) #packing file_size for transfer to server
 		client.sendto(size_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
 		data = client.recv(size_buffer) #wait to get data sent back from server for confirmation
-		str_struct = struct.pack("ihh20s", remote_ip, remote_port, 2, strfile)
+		str_struct = struct.pack("ihh20s", local_ip, 4000, 2, strfile)
 		client.sendto(str_struct, (local_ip, int(troll_port)))#send the file name second
 		data = client.recv(size_buffer)
 		while start_i < file_size: #seek from bin_file until it reaches the end
 			bin_file.seek(start_i) #1000 bytes starting at start_i
 			data = bin_file.read(end_i - start_i)
-			data_struct = struct.pack("ihh1000s", remote_ip, remote_port, 3, data)
+			data_struct = struct.pack("ihh1000s", local_ip, 4000, 3, data)
 			client.sendto(data_struct, (local_ip, int(troll_port)))
 			#copy_file.write(data) #writes 1000 bytes of data to copy_file 
 			start_i += size_buffer #increments start_i to move accross bin_file
@@ -55,6 +55,6 @@ if os.path.isfile(strfile): #ensures file named "strfile" exists in current dire
 else: #print error if file not found
 	print("File not found.")
 #clean-up
-end_struct = struct.pack("ihhi", remote_ip, remote_port, 1, 0)
+end_struct = struct.pack("ihhi", local_ip, 4000, 1, 0)
 client.sendto(end_struct, (local_ip, int(troll_port)))
 client.close()
