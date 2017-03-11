@@ -41,12 +41,8 @@ print (file_name)
 # print("File size is: " + str(file_size)) #debug code
 decode_name = file_name[3].decode('utf-8', 'ignore')
 print (decode_name)
-final_name = ""
-sample = decode_name[0]
-i = 0
-while sample != "\x00":
-	final_name += decode_name[i]
-	i += 1
+decode_name = decode_name.translate(dict.fromkeys(range(32)))
+print (decode_name)
 
 print (final_name)
 with open(decode_name, 'bw') as server_file:
