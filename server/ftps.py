@@ -42,7 +42,6 @@ try:
 	# print("File size is: " + str(file_size)) #debug code
 	decode_name = file_name[3].decode('utf-8', 'ignore')
 	decode_name = decode_name.translate(dict.fromkeys(range(32))) #removes any null escape characters that can cause issues with open function
-	null_string = "\x00" * 1000
 	with open(decode_name, 'bw') as server_file:
 		while data: #reads until receives terminating str data
 			server.settimeout(2) #timesout if it no longer recieves data
@@ -54,7 +53,10 @@ try:
 			end_i += size_buffer
 except timeout:
 	#clean up
-	server_file.close()
-	print("\nTransfer Complete!")
-	server.close()
+	try:
+		server_file.close()
+		print("\nTransfer Complete!")
+		server.close()
+	except NameError:
+		print ("Transfer Failed")
 
