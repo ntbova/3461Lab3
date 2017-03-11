@@ -33,14 +33,14 @@ while 1:
 print (file_size)
 while 1:
 	data, addr = server.recvfrom(size_buffer) #receiving file name
-	file_name = struct.unpack("4shh20s", data)
+	file_name = struct.unpack("4shh20p", data)
 	server.sendto(data, addr)
 	break
 #DEBUG CODE
 print (file_name)
 # print("File size is: " + str(file_size)) #debug code
 
-with open(file_name[3].decode(), 'bw') as server_file:
+with open(file_name[3], 'bw') as server_file:
 	while data: #reads until receives terminating str data
 		data, addr = server.recvfrom(size_buffer + 48)
 		file_part = struct.unpack("4shh1000s", data)
