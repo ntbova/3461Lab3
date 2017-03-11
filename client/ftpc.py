@@ -36,7 +36,7 @@ if os.path.isfile(strfile): #ensures file named "strfile" exists in current dire
 		
 		#print("File size is: " + str(file_size)) #debug code
 
-		size_struct = struct.pack("4shhi", s_local_ip, 4000, 1, file_size) #packing file_size for transfer to server
+		size_struct = struct.pack("4shhi", local_ip, 4000, 1, file_size) #packing file_size for transfer to server
 		client.sendto(size_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
 		data = client.recv(size_buffer) #wait to get data sent back from server for confirmation
 		str_struct = struct.pack("4shh20s", s_local_ip, 4000, 2, s_strfile)
