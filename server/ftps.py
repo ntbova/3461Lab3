@@ -1,4 +1,4 @@
-#Lab 2 - ftps.py - Nicholas Bova
+#Lab 3 - ftps.py - Nicholas Bova
 from socket import *
 import sys
 import select
