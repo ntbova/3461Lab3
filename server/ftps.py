@@ -41,9 +41,7 @@ print (file_name)
 # print("File size is: " + str(file_size)) #debug code
 
 with open(file_name, 'bw') as server_file:
-	while 1: #reads until it is no longer recieving data
-		if not data:
-			break
+	while data != "EOF": #reads until it is no longer recieving data
 		data, addr = server.recvfrom(size_buffer)
 		#copy_file.write(data) #writes 1000 bytes of data to copy_file 			
 		server_file.write(data)
