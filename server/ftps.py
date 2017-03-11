@@ -27,7 +27,6 @@ print ('\nWaiting for packets to be sent...')
 # loop until it no longer is recieving any data
 try:
 	while 1:
-		server.settimeout(2) #timesout if it no longer recieves data
 		data, addr = server.recvfrom(size_buffer) #receiving file size
 		file_size = struct.unpack("lhhi", data)
 		server.sendto(data, addr) 
