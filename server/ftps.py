@@ -30,14 +30,14 @@ while 1:
 	server.sendto(data, addr) 
 	break
 #DEBUG CODE
-print (file_size[3])
+print (file_size)
 while 1:
 	data, addr = server.recvfrom(20) #receiving file name
 	file_name = data.decode()
 	server.sendto(data, addr)
 	break
 #DEBUG CODE
-print (file_name[3])
+print (file_name)
 # print("File size is: " + str(file_size)) #debug code
 
 with open(file_name, 'bw') as server_file:
