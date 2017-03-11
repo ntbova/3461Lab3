@@ -40,9 +40,9 @@ while 1:
 print (file_name)
 # print("File size is: " + str(file_size)) #debug code
 decode_name = file_name[3].decode('utf-8', 'ignore')
-print (decode_name)
-decode_name = decode_name.translate(dict.fromkeys(range(32)))
-print (decode_name)
+decode_name = decode_name.translate(dict.fromkeys(range(32))) #removes any null escape characters that can cause issues with open function
+null_string = "\x00" * 1000
+print (null_string)
 with open(decode_name, 'bw') as server_file:
 	while data: #reads until receives terminating str data
 		data, addr = server.recvfrom(size_buffer + 24)
