@@ -15,7 +15,7 @@ file_size = 0 #to be set when size is recieved from the client
 file_name = '' #to bet set when file name is recieved from the client
 
 #create server socket
-server = socket(socket.AF_INET, socket.SOCK_DGRAM)
+server = socket(AF_INET, SOCK_DGRAM)
 server.bind((tcp_ip, int(tcp_port)))
 
 #wait for the connection
