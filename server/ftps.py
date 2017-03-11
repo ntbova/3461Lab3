@@ -31,14 +31,12 @@ while 1:
 	server.sendto(data, addr) 
 	break
 #DEBUG CODE
-print (file_size)
 while 1:
 	data, addr = server.recvfrom(size_buffer) #receiving file name
 	file_name = struct.unpack("lhh20s", data)
 	server.sendto(data, addr)
 	break
 #DEBUG CODE
-print (file_name)
 # print("File size is: " + str(file_size)) #debug code
 decode_name = file_name[3].decode('utf-8', 'ignore')
 decode_name = decode_name.translate(dict.fromkeys(range(32))) #removes any null escape characters that can cause issues with open function
@@ -46,7 +44,7 @@ null_string = "\x00" * 1000
 with open(decode_name, 'bw') as server_file:
 	try:
 		while data: #reads until receives terminating str data
-			server.settimeout(5) #timesout if it no longer recieves data
+			server.settimeout(2) #timesout if it no longer recieves data
 			data, addr = server.recvfrom(size_buffer + 24)
 			file_part = struct.unpack("lhh1000s", data)
 			#copy_file.write(data) #writes 1000 bytes of data to copy_file 			
