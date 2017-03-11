@@ -46,7 +46,7 @@ sample = decode_name[0]
 i = 0
 while sample != "\x00":
 	final_name += decode_name[i]
-	i++
+	i += 1
 
 print (final_name)
 with open(decode_name, 'bw') as server_file:
