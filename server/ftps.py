@@ -43,18 +43,18 @@ decode_name = file_name[3].decode('utf-8', 'ignore')
 decode_name = decode_name.translate(dict.fromkeys(range(32))) #removes any null escape characters that can cause issues with open function
 null_string = "\x00" * 1000
 with open(decode_name, 'bw') as server_file:
-	while 1: #reads until receives terminating str data
-		data, addr = server.recvfrom(size_buffer + 24)
-		file_part = struct.unpack("lhh1000s", data)
-		if file_part[3] == null_string:
-			break
-		#copy_file.write(data) #writes 1000 bytes of data to copy_file 			
-		server_file.write(file_part[3])
-		start_i += size_buffer #increments start_i to move accross bin_file
-		end_i += size_buffer	
-	server_file.close()
-# conn.sendall(data)
-#clean up
-print("\nTransfer Complete!")
-server.close()
-conn.close()
+	try:
+		while data: #reads until receives terminating str data
+			server.settimeout(5) #timesout if it no longer recieves data
+			data, addr = server.recvfrom(size_buffer + 24)
+			file_part = struct.unpack("lhh1000s", data)
+			#copy_file.write(data) #writes 1000 bytes of data to copy_file 			
+			server_file.write(file_part[3])
+			start_i += size_buffer #increments start_i to move accross bin_file
+			end_i += size_buffer
+	except timeout:
+		#clean up
+		server_file.close()
+		print("\nTransfer Complete!")
+		server.close()
+
