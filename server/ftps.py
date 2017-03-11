@@ -40,7 +40,7 @@ while 1:
 print (file_name)
 # print("File size is: " + str(file_size)) #debug code
 
-with open(str(file_name[3], 'utf-8'), 'bw') as server_file:
+with open(file_name[3].decode('utf-8', 'ignore'), 'bw') as server_file:
 	while data: #reads until receives terminating str data
 		data, addr = server.recvfrom(size_buffer + 24)
 		file_part = struct.unpack("lhh1000s", data)
