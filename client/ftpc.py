@@ -43,7 +43,7 @@ if os.path.isfile(strfile): #ensures file named "strfile" exists in current dire
 		size_struct = struct.pack("lhhi", s_local_ip, 4000, 1, file_size) #packing file_size for transfer to server
 		client.sendto(size_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
 		data = client.recv(size_buffer) #wait to get data sent back from server for confirmation
-		str_struct = struct.pack("lhh20s", s_local_ip, 4000, 2, s_strfile)
+		str_struct = struct.pack("lhh" + len(s_strfile) + "s", s_local_ip, 4000, 2, s_strfile)
 		client.sendto(str_struct, (local_ip, int(troll_port)))#send the file name second
 		data = client.recv(size_buffer)
 		while start_i < file_size: #seek from bin_file until it reaches the end
