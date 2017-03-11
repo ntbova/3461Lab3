@@ -26,14 +26,14 @@ print ('\nWaiting for packets to be sent...')
 # loop until it no longer is recieving any data
 while 1:
 	data, addr = server.recvfrom(size_buffer) #receiving file size
-	file_size = struct.unpack("Ihhi", data)
+	file_size = struct.unpack("lhhi", data)
 	server.sendto(data, addr) 
 	break
 #DEBUG CODE
 print (file_size)
 while 1:
 	data, addr = server.recvfrom(size_buffer) #receiving file name
-	file_name = struct.unpack("Ihh20s", data)
+	file_name = struct.unpack("lhh20s", data)
 	server.sendto(data, addr)
 	break
 #DEBUG CODE
@@ -43,7 +43,7 @@ print (file_name)
 with open(file_name[3].decode(), 'bw') as server_file:
 	while data: #reads until receives terminating str data
 		data, addr = server.recvfrom(size_buffer + 48)
-		file_part = struct.unpack("Ihh1000s", data)
+		file_part = struct.unpack("lhh1000s", data)
 		#copy_file.write(data) #writes 1000 bytes of data to copy_file 			
 		server_file.write(file_part[3])
 		start_i += size_buffer #increments start_i to move accross bin_file
