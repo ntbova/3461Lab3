@@ -1,5 +1,5 @@
 #Lab 3 - ftpc.py - Nicholas Bova
-fromt socket import *
+from socket import *
 import time
 import sys
 import os
