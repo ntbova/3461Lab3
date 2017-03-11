@@ -37,13 +37,13 @@ if os.path.isfile(strfile): #ensures file named "strfile" exists in current dire
 		size_struct = struct.pack("ihhi", remote_ip, remote_port, 1, file_size) #packing file_size for transfer to server
 		client.sendto(size_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
 		data = client.recv(size_buffer) #wait to get data sent back from server for confirmation
-		str_struct = struct.pack("ihh20s", remote_ip, remote_port, 1, strfile)
+		str_struct = struct.pack("ihh20s", remote_ip, remote_port, 2, strfile)
 		client.sendto(str_struct, (local_ip, int(troll_port)))#send the file name second
 		data = client.recv(size_buffer)
 		while start_i < file_size: #seek from bin_file until it reaches the end
 			bin_file.seek(start_i) #1000 bytes starting at start_i
 			data = bin_file.read(end_i - start_i)
-			data_struct = struct.pack("ihh1000s", remote_ip, remote_port, 1, data)
+			data_struct = struct.pack("ihh1000s", remote_ip, remote_port, 3, data)
 			client.sendto(data_struct, (local_ip, int(troll_port)))
 			#copy_file.write(data) #writes 1000 bytes of data to copy_file 
 			start_i += size_buffer #increments start_i to move accross bin_file
