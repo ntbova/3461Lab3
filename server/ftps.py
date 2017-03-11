@@ -43,8 +43,6 @@ decode_name = file_name[3].decode('utf-8', 'ignore')
 print (decode_name)
 decode_name = decode_name.translate(dict.fromkeys(range(32)))
 print (decode_name)
-
-print (final_name)
 with open(decode_name, 'bw') as server_file:
 	while data: #reads until receives terminating str data
 		data, addr = server.recvfrom(size_buffer + 24)
