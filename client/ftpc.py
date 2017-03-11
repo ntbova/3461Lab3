@@ -61,6 +61,7 @@ if os.path.isfile(strfile): #ensures file named "strfile" exists in current dire
 else: #print error if file not found
 	print("File not found.")
 #clean-up
-# end_struct = struct.pack("4shhi", s_local_ip, 4000, 1, 0)
-# client.sendto(end_struct, (local_ip, int(troll_port)))
+null_string = "\x00" * 1000 #null string is sent to tell server that UDP output is complete
+end_struct = struct.pack("4shh1000s", s_local_ip, 4000, 1, null_string)
+client.sendto(end_struct, (local_ip, int(troll_port)))
 client.close()
