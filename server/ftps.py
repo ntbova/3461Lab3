@@ -25,25 +25,27 @@ print ('\nWaiting for packets to be sent...')
 # print ('\nConnected by: '), addr
 
 # loop until it no longer is recieving any data
-while 1:
-	data, addr = server.recvfrom(size_buffer) #receiving file size
-	file_size = struct.unpack("lhhi", data)
-	server.sendto(data, addr) 
-	break
-#DEBUG CODE
-print ('\Data is being received. Please wait.')
-while 1:
-	data, addr = server.recvfrom(size_buffer) #receiving file name
-	file_name = struct.unpack("lhh20s", data)
-	server.sendto(data, addr)
-	break
-#DEBUG CODE
-# print("File size is: " + str(file_size)) #debug code
-decode_name = file_name[3].decode('utf-8', 'ignore')
-decode_name = decode_name.translate(dict.fromkeys(range(32))) #removes any null escape characters that can cause issues with open function
-null_string = "\x00" * 1000
-with open(decode_name, 'bw') as server_file:
-	try:
+try:
+	while 1:
+		server.settimeout(2) #timesout if it no longer recieves data
+		data, addr = server.recvfrom(size_buffer) #receiving file size
+		file_size = struct.unpack("lhhi", data)
+		server.sendto(data, addr) 
+		break
+	#DEBUG CODE
+	print ('\nData is being received. Please wait.')
+	while 1:
+		server.settimeout(2) #timesout if it no longer recieves data
+		data, addr = server.recvfrom(size_buffer) #receiving file name
+		file_name = struct.unpack("lhh20s", data)
+		server.sendto(data, addr)
+		break
+	#DEBUG CODE
+	# print("File size is: " + str(file_size)) #debug code
+	decode_name = file_name[3].decode('utf-8', 'ignore')
+	decode_name = decode_name.translate(dict.fromkeys(range(32))) #removes any null escape characters that can cause issues with open function
+	null_string = "\x00" * 1000
+	with open(decode_name, 'bw') as server_file:
 		while data: #reads until receives terminating str data
 			server.settimeout(2) #timesout if it no longer recieves data
 			data, addr = server.recvfrom(size_buffer + 24)
@@ -52,9 +54,9 @@ with open(decode_name, 'bw') as server_file:
 			server_file.write(file_part[3])
 			start_i += size_buffer #increments start_i to move accross bin_file
 			end_i += size_buffer
-	except timeout:
-		#clean up
-		server_file.close()
-		print("\nTransfer Complete!")
-		server.close()
+except timeout:
+	#clean up
+	server_file.close()
+	print("\nTransfer Complete!")
+	server.close()
 
