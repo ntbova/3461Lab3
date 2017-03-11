@@ -1,5 +1,5 @@
 #Lab 2 - ftps.py - Nicholas Bova
-from socket import *
+import socket
 import sys
 import select
 import os
