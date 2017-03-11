@@ -16,7 +16,7 @@ end_i = 1000
 size_buffer = 1000
 
 #udp payload segment
-payload = struct.pack('ihh1000s', remote_ip, remote_port, 1)
+#payload = struct.pack('ihh1000s', remote_ip, remote_port, 1)
 
 #creating the client here
 client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
