@@ -31,6 +31,7 @@ while 1:
 	server.sendto(data, addr) 
 	break
 #DEBUG CODE
+print ('\Data is being received. Please wait.')
 while 1:
 	data, addr = server.recvfrom(size_buffer) #receiving file name
 	file_name = struct.unpack("lhh20s", data)
