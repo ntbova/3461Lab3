@@ -1,0 +1,9 @@
+Command List
+
+python3 ftps.py 5000 3000
+
+troll -C beta.cse.ohio-state.edu -S zeta.cse.ohio-state.edu -a 4000 -b 6000 3000 -t -x 0
+
+troll -C zeta.cse.ohio-state.edu -S beta.cse.ohio-state.edu -a 6000 -b 4000 3000 -t -x 0
+
+python3 ftpc.py zeta.cse.ohio-state.edu 6000 3000 1.jpg
