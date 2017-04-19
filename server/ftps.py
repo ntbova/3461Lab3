@@ -40,6 +40,7 @@ try:
 		data, addr = server.recvfrom(size_buffer) #receiving file size
 		file_size = struct.unpack("lhhi", data)
 		ack = struct.pack('i', ACK_bit)
+		server.sendto(ack, (tcp_ip, int(troll_port)))
 		ready = select.select([server],[],[],0.01) #Timeout time of 2 seconds
 		while 1:
 			if ready[0]:
@@ -47,8 +48,7 @@ try:
 				break
 			else:
 				server.sendto(ack, (tcp_ip, int(troll_port)))
-				ready = select.select([server],[],[],0.01)				
-		server.sendto(data, (tcp_ip, int(troll_port)))
+				ready = select.select([server],[],[],0.01)	
 		ACK_bit = change_ACK(ACK_bit)
 		break
 	#DEBUG CODE
@@ -79,7 +79,7 @@ try:
 			data, addr = server.recvfrom(size_buffer + 24)
 			file_part = struct.unpack("lhh1000s", data)
 			ack = struct.pack('i', ACK_bit)
-			server.sendto(data, (tcp_ip, int(troll_port)))
+			server.sendto(ack, (tcp_ip, int(troll_port)))
 			ready = select.select([server],[],[],0.15) #Timeout time of 2 seconds
 			while 1:
 				if ready[0]:
