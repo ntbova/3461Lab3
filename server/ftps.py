@@ -75,6 +75,8 @@ try:
 	decode_name = decode_name.translate(dict.fromkeys(range(32))) #removes any null escape characters that can cause issues with open function
 	with open(decode_name, 'bw') as server_file:
 		while data: #reads until receives terminating str data
+			timeout - time.time() + 10
+			leave = 0
 			server.settimeout(10) #timesout if it no longer recieves data
 			data, addr = server.recvfrom(size_buffer + 24)
 			file_part = struct.unpack("lhh1000s", data)
@@ -84,6 +86,10 @@ try:
 			while 1:
 				if ready[0]:
 					data, addr = server.recvfrom(size_buffer)
+					file_part = struct.unpack("lhh1000s", data)
+					break
+				elif time.time() > timeout:
+					leave = 1
 					break
 				else:
 					server.sendto(ack, (tcp_ip, int(troll_port)))	
@@ -93,6 +99,8 @@ try:
 			server_file.write(file_part[3])
 			start_i += size_buffer #increments start_i to move accross bin_file
 			end_i += size_buffer
+			if leave:
+				break
 except timeout:
 	#clean up
 	try:
