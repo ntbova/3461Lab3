@@ -41,14 +41,14 @@ try:
 		file_size = struct.unpack("lhhi", data)
 		ack = struct.pack('i', ACK_bit)
 		server.sendto(ack, (tcp_ip, int(troll_port)))
-		ready = select.select([server],[],[],0.005) #Timeout time of 2 seconds
+		ready = select.select([server],[],[],0.05) #Timeout time of 2 seconds
 		while 1:
 			if ready[0]:
 				data, addr = server.recvfrom(size_buffer)
 				break
 			else:
 				server.sendto(ack, (tcp_ip, int(troll_port)))
-				ready = select.select([server],[],[],0.005)	
+				# ready = select.select([server],[],[],0.005)	
 		ACK_bit = change_ACK(ACK_bit)
 		break
 	#DEBUG CODE
@@ -58,7 +58,7 @@ try:
 		data, addr = server.recvfrom(size_buffer) #receiving file name
 		file_name = struct.unpack("lhh20s", data)
 		ack = struct.pack('i', ACK_bit)
-		ready = select.select([server],[],[],0.005) #Timeout time of 2 seconds
+		ready = select.select([server],[],[],0.05) #Timeout time of 2 seconds
 		server.sendto(ack, (tcp_ip, int(troll_port)))
 		while 1:
 			if ready[0]:
@@ -66,7 +66,7 @@ try:
 				break
 			else:
 				server.sendto(ack, (tcp_ip, int(troll_port)))
-				ready = select.select([server],[],[],0.005)
+				# ready = select.select([server],[],[],0.005)
 		ACK_bit = change_ACK(ACK_bit)
 		break
 	#DEBUG CODE
@@ -80,14 +80,14 @@ try:
 			file_part = struct.unpack("lhh1000s", data)
 			ack = struct.pack('i', ACK_bit)
 			server.sendto(ack, (tcp_ip, int(troll_port)))
-			ready = select.select([server],[],[],0.005) #Timeout time of 2 seconds
+			ready = select.select([server],[],[],0.05) #Timeout time of 2 seconds
 			while 1:
 				if ready[0]:
 					data, addr = server.recvfrom(size_buffer)
 					break
 				else:
 					server.sendto(ack, (tcp_ip, int(troll_port)))	
-					ready = select.select([server],[],[],0.005)
+					# ready = select.select([server],[],[],0.005)
 			ACK_bit = change_ACK(ACK_bit)
 			#copy_file.write(data) #writes 1000 bytes of data to copy_file 			
 			server_file.write(file_part[3])
