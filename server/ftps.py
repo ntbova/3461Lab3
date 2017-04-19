@@ -77,7 +77,7 @@ try:
 		while data: #reads until receives terminating str dat
 			server.settimeout(10) #timesout if it no longer recieves data
 			data, addr = server.recvfrom(size_buffer + 24)
-			# file_part = struct.unpack("lhh1000s", data)
+			file_part = struct.unpack("lhh1000s", data)
 			ack = struct.pack('i', ACK_bit)
 			server.sendto(ack, (tcp_ip, int(troll_port)))
 			ready = select.select([server],[],[],0.05) #Timeout time of 2 seconds
@@ -88,8 +88,6 @@ try:
 				else:
 					server.sendto(ack, (tcp_ip, int(troll_port)))	
 					ready = select.select([server],[],[],0.05)
-
-			file_part = struct.unpack("lhh1000s", data)
 			ACK_bit = change_ACK(ACK_bit)
 			#copy_file.write(data) #writes 1000 bytes of data to copy_file 			
 			server_file.write(file_part[3])
