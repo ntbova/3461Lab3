@@ -48,7 +48,7 @@ try:
 				break
 			else:
 				server.sendto(ack, (tcp_ip, int(troll_port)))
-				# ready = select.select([server],[],[],0.005)	
+				ready = select.select([server],[],[],0.05)	
 		ACK_bit = change_ACK(ACK_bit)
 		break
 	#DEBUG CODE
@@ -66,7 +66,7 @@ try:
 				break
 			else:
 				server.sendto(ack, (tcp_ip, int(troll_port)))
-				# ready = select.select([server],[],[],0.005)
+				ready = select.select([server],[],[],0.05)
 		ACK_bit = change_ACK(ACK_bit)
 		break
 	#DEBUG CODE
@@ -87,7 +87,7 @@ try:
 					break
 				else:
 					server.sendto(ack, (tcp_ip, int(troll_port)))	
-					# ready = select.select([server],[],[],0.005)
+					ready = select.select([server],[],[],0.05)
 			ACK_bit = change_ACK(ACK_bit)
 			#copy_file.write(data) #writes 1000 bytes of data to copy_file 			
 			server_file.write(file_part[3])

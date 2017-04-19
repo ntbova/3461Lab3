@@ -66,36 +66,36 @@ try:
 					r_ack = struct.unpack("i", data)
 					if r_ack[0] != ACK_bit:
 						client.sendto(size_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
-						# ready = select.select([client],[],[],0.005)
+						ready = select.select([client],[],[],0.05)
 					else:
 						ACK_bit = change_ACK(ACK_bit)
 						break
 				else:
 					client.sendto(size_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
-					# ready = select.select([client],[],[],0.005)
+					ready = select.select([client],[],[],0.05)
 			print(str(r_ack[0]))
 			str_struct = struct.pack("lhh20s", s_local_ip, 4000, 2, strfile.encode('utf-8', 'ignore'))
 			client.sendto(str_struct, (local_ip, int(troll_port)))#send the file name second
-			ready = select.select([client],[],[],0.05) 
+			ready = select.select([client],[],[],2) 
 			while 1:
 				if ready[0]:
 					data = client.recv(size_buffer)
 					r_ack = struct.unpack("i", data)
 					if r_ack[0] != ACK_bit:
 						client.sendto(str_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
-						# ready = select.select([client],[],[],0.05)
+						ready = select.select([client],[],[],0.05)
 					else:
 						ACK_bit = change_ACK(ACK_bit)
 						break
 				else:
 					client.sendto(str_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
-					# ready = select.select([client],[],[],0.05)
+					ready = select.select([client],[],[],0.05)
 			while start_i < file_size: #seek from bin_file until it reaches the end
 				bin_file.seek(start_i) #1000 bytes starting at start_i
 				data = bin_file.read(end_i - start_i)
 				data_struct = struct.pack("lhh1000s", s_local_ip, 4000, 3, data)
 				client.sendto(data_struct, (local_ip, int(troll_port)))
-				ready = select.select([client],[],[],0.05) 
+				ready = select.select([client],[],[],2) 
 				print(str(r_ack[0]))
 				while 1:
 					if ready[0]:
@@ -103,13 +103,13 @@ try:
 						r_ack = struct.unpack("i", data)
 						if r_ack[0] != ACK_bit:
 							client.sendto(data_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
-							# ready = select.select([client],[],[],0.05)
+							ready = select.select([client],[],[],0.05)
 						else:
 							ACK_bit = change_ACK(ACK_bit)
 							break
 					else:
 						client.sendto(data_struct, (local_ip, int(troll_port)))#send the file size first to the troll on troll_port
-						# ready = select.select([client],[],[],0.005)
+						ready = select.select([client],[],[],0.05)
 				#copy_file.write(data) #writes 1000 bytes of data to copy_file 
 				start_i += size_buffer #increments start_i to move accross bin_file
 				end_i += size_buffer
