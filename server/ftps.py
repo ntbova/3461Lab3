@@ -75,7 +75,7 @@ try:
 	decode_name = decode_name.translate(dict.fromkeys(range(32))) #removes any null escape characters that can cause issues with open function
 	with open(decode_name, 'bw') as server_file:
 		while data: #reads until receives terminating str data
-			timeout - time.time() + 10
+			timeout = time.time() + 10
 			leave = 0
 			server.settimeout(10) #timesout if it no longer recieves data
 			data, addr = server.recvfrom(size_buffer + 24)
